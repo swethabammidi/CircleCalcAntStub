@@ -1,0 +1,56 @@
+<project name="CircleCalcAnt" default="run" basedir=".">
+	<property name="src.dir" value="src"/>
+        <property name="build.dir" value="build"/>
+        <property name="jar.dir"  value="build/jar"/>
+	<property name="base.dir" value="${build.dir}/classes"/>
+	<property name="dist.dir" value="dist"/>
+	<property name="dist.jar.dir" value="${dist.dir}/lib"/>
+	<property name="dist.jarfile" value="${dist.jar.dir}/CircleCalc.jar"/>
+	<property name="lib.dir" value="lib"/>
+	
+	<!--property name="jar.mathlib" location="${lib.dir}/MISSING_JAR_NAME_HERE"/-->
+        <property name="jar.mathlib" location="${lib.dir}/commons-math-2.2.jar"/>
+
+<path id="classpath">
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
+                <!-- <fileset dir="${util.lib.dir}" includes="**/*.jar"/> -->
+        </path>
+
+        <target name="clean">
+                <delete dir="${base.dir}"/>
+                <delete dir="${jar.dir}"/>
+        </target>
+
+	<target name="init" depends="clean">
+		<!-- write init task(s) here -->
+                <mkdir dir="${base.dir}"/>
+                <mkdir dir="${jar.dir}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<!-- write compile task(s) here -->
+                <javac srcdir="${src.dir}"
+                       destdir="${base.dir}" classpathref="classpath" includeantruntime="false" />
+	</target>
+
+	<target name="dist" depends="compile">
+		<!-- add missing task(s) (if any) here -->
+                 <jar destfile="${jar.dir}/CircleCalcAntStub-1.0.jar"
+                      basedir="${base.dir}">
+                      <manifest>
+                                <attribute name="Main-Class" value="Circle"/>
+                        </manifest>
+
+                	</jar>
+	</target>
+
+        <target name="run" depends="dist">
+          <zip destfile="${dist.dir}/CircleCalcAntStub-1.0.zip"
+               basedir="${jar.dir}"
+               />
+        </target>
+	
+	<!-- add "run" target here" -->
+
+	<!-- add clean target here" -->
+</project>
